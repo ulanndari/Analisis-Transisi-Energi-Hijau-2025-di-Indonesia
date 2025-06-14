@@ -26,4 +26,32 @@ Ditunggu partisipasinya! 🎉 Aksi kecil hari ini = dampak besar untuk bumi 🌍
 ![ROADMAP](https://github.com/arry-hutomo/Analisis-Transisi-Energi-Hijau-2025-di-Indonesia/blob/main/ROADMAP.png)
 
 ---
+🌟✨ SELAMAT DATANG DI STAGE 2: ECO DATA PIONEERS! ✨🌟
 
+Halo, Eco-Techno Leaders masa depan! 🎉🌱 Bersiaplah masuk ke petualangan baru yang seru banget—kita akan jadi pionir data hijau untuk Indonesia yang lebih sustainable! 💚📊
+
+Di stage ini, kita akan:
+🔹 Hitung pajak karbon untuk patuhi regulasi 📜💰
+🔹 Deteksi greenwashing pakai data emisi 🕵️♂️🌍
+🔹 Analisis risiko lahan kurangi konflik sosial ⚖️🚜
+🔹 Belajar Python dari dasar sampai pro (if-else sampai modul!) 🐍💻
+🔹 Bikin portofolio keren buat usulan ke pemerintah 🏛️✨
+
+Tools yang akan dipakai:
+🛠️ Anaconda + VSCode + Jupyter Notebook
+📚 Library: Pandas, NumPy, Matplotlib (siap jadi data wizard!)
+
+Tenang! Tutorial ini ramah pemula, langkah demi langkah, pakai data realistis, dan pastinya—dampaknya nyata! 🚀
+
+"Masa depan hijau dimulai dari langkah kecil kita hari ini. Yuk, bersama-sama wujudkan perubahan!" 🌿🙌
+
+📌 Ready to rock? Klik link di bawah untuk mulai petualanganmu!
+
+[NEXT TO STAGES 2]
+
+#EcoDataPioneers #EnergiHijau2025 #PythonForEarth 💡🌎
+
+Doa & Semangat:
+"Semoga ilmu ini jadi berkah, bermanfaat untuk bumi dan sesama. Aamiin! 🤲✨"
+
+(Deskripsi penuh emoticon, bahasa santai tapi sopan, dan menggaet semangat anak muda!) 🎯💚
