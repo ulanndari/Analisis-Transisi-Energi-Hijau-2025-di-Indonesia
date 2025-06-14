@@ -45,13 +45,17 @@ Tenang! Tutorial ini ramah pemula, langkah demi langkah, pakai data realistis, d
 
 "Masa depan hijau dimulai dari langkah kecil kita hari ini. Yuk, bersama-sama wujudkan perubahan!" 🌿🙌
 
-📌 Ready to rock? Klik link di bawah untuk mulai petualanganmu!
-
-[NEXT TO STAGES 2]
-
-#EcoDataPioneers #EnergiHijau2025 #PythonForEarth 💡🌎
-
 Doa & Semangat:
 "Semoga ilmu ini jadi berkah, bermanfaat untuk bumi dan sesama. Aamiin! 🤲✨"
 
-(Deskripsi penuh emoticon, bahasa santai tapi sopan, dan menggaet semangat anak muda!) 🎯💚
+
+📌 Ready to rock? Klik link di bawah untuk mulai petualanganmu!
+
+[NEXT TO STAGES 2](https://arry-hutomo.github.io/Analisis-Transisi-Energi-Hijau-2025-di-Indonesia/)
+
+#EcoDataPioneers #EnergiHijau2025 #PythonForEarth 💡🌎
+
+
+ARRY HUTOMO
+FOUNDER NAWALA INTEGRA NUSANTARA
+---
