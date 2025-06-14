@@ -1,0 +1,427 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persiapan Data CSV - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Persiapan Data CSV untuk Pemula</h1>
+        <p>Sebelum coding, kita buat file <span class="term">CSV</span> sebagai sumber data realistis. <span class="term">CSV</span> (Comma-Separated Values) adalah file teks sederhana yang menyimpan data dalam format tabel, dengan kolom dipisahkan koma dan baris dipisahkan enter. Kita akan buat tiga file <span class="term">CSV</span> dengan <span class="term">30 baris</span> dan <span class="term">5 kolom</span> per file, mencerminkan kasus nyata di Indonesia, lengkap dengan isi database. Untuk pemula, kita jelaskan langkah-langkah membuat <span class="term">CSV</span> dari nol dengan sangat detail.</p>
+        <h2>Apa Itu CSV dan Mengapa Penting?</h2>
+        <p>Halo, <span class="term">teman-teman</span>! Bayangkan <span class="term">CSV</span> sebagai buku catatan digital yang rapi, menyimpan data seperti daftar <span class="term">emisi perusahaan</span> atau proyek <span class="term">PLTS</span>. Setiap baris mewakili satu entri (misalnya satu perusahaan), dan setiap kolom berisi informasi (misalnya emisi atau lokasi). Kita pakai <span class="term">CSV</span> karena mudah dibaca oleh <span class="term">Python</span> (via <span class="term">Pandas</span>) dan realistis untuk analisis energi hijau, mencerminkan data industri dan proyek di Indonesia.</p>
+        <h2>Langkah-Langkah Membuat File CSV</h2>
+        <h3>1. Buat Folder Proyek</h3>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! Pertama, kita buat folder sebagai rumah proyek, tempat menyimpan kode dan data <span class="term">CSV</span>. Ini bikin semua file rapi dan mudah ditemukan.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Buka File Explorer (Windows: tekan <span class="term">Win + E</span>, Mac: Finder, Linux: File Manager).</li>
+            <li>Di drive lokal (misalnya <span class="term">C:</span>), klik kanan, pilih <span class="term">New > Folder</span>, beri nama <span class="term">EnergiHijau2025</span>.</li>
+            <li>Buka folder <span class="term">EnergiHijau2025</span>, pastikan kosong untuk simpan file <span class="term">CSV</span> dan kode.</li>
+        </ul>
+        <p><strong>Artinya:</strong> Folder ini jadi pusat proyek, menjaga semua file terorganisir.</p>
+        <h3>2. Pilih Alat untuk Membuat CSV</h3>
+        <p><strong>Narasi:</strong> Kita bisa bikin <span class="term">CSV</span> pakai teks editor sederhana seperti <span class="term">Notepad</span> atau spreadsheet seperti <span class="term">Excel</span>. Untuk pemula, kita jelaskan dua cara: <span class="term">Notepad</span> (manual, bikin paham struktur <span class="term">CSV</span>) dan <span class="term">Excel</span> (visual, lebih mudah).</p>
+        <p><strong>Pilihannya:</strong></p>
+        <ul>
+            <li><span class="term">Notepad</span>: Gratis, ada di setiap komputer, cocok untuk belajar struktur <span class="term">CSV</span>.</li>
+            <li><span class="term">Excel</span>: Lebih mudah untuk input data tabel, tapi harus disimpan sebagai <span class="term">CSV</span>.</li>
+        </ul>
+        <p><strong>Artinya:</strong> Kedua alat ini menghasilkan <span class="term">CSV</span> yang bisa dibaca <span class="term">Python</span>, pilih yang paling nyaman.</p>
+        <h3>3. Buat File CSV dengan Notepad (Manual)</h3>
+        <p><strong>Narasi:</strong> Halo, <span class="term">teman-teman</span>! Kita coba bikin <span class="term">CSV</span> pakai <span class="term">Notepad</span> dulu, biar paham struktur dasar. Kita buat tiga file: <span class="term">emisi perusahaan</span>, <span class="term">konflik lahan</span>, dan <span class="term">tren emisi</span>, masing-masing dengan <span class="term">30 baris</span> dan <span class="term">5 kolom</span>.</p>
+        <p><strong>Langkah untuk emisi_perusahaan.csv:</strong></p>
+        <ul>
+            <li>Buka <span class="term">Notepad</span> (Windows: cari “Notepad” di Start Menu, Mac: TextEdit, Linux: gedit).</li>
+            <li>Tulis baris pertama (header) dengan kolom dipisah koma:</li>
+        </ul>
+        <pre>Nama_Perusahaan,Emisi_2024,Klaim_Hijau,Sektor,Lokasi</pre>
+        <ul>
+            <li>Tambah 30 baris data, berikut isi lengkap:</li>
+        </ul>
+        <pre>
+Nama_Perusahaan,Emisi_2024,Klaim_Hijau,Sektor,Lokasi
+PT_Textilindo,62.5,ya,Tekstil,Jawa Barat
+PT_Semindo,45.8,tidak,Semen,Jawa Tengah
+PT_EnergiJaya,78.2,ya,Energi,Banten
+PT_Pulpindo,55.0,ya,Kertas,Sumatera Utara
+PT_AgroMakmur,42.3,tidak,Agribisnis,Jawa Timur
+PT_BajaSentosa,68.7,ya,Manufaktur,Jawa Barat
+PT_KimiaFarindo,49.1,tidak,Kimia,Banten
+PT_MiningCo,82.4,ya,Tambang,Kalimantan Timur
+PT_PetroJaya,60.9,tidak,Petrokimia,Jawa Timur
+PT_SinarLogam,53.6,ya,Logam,Jawa Tengah
+PT_IndoPlastik,47.2,tidak,Plastik,Jakarta
+PT_BumiEnergi,75.3,ya,Energi,Sumatera Selatan
+PT_TextilMakmur,64.8,ya,Tekstil,Jawa Barat
+PT_SemenBerkah,43.5,tidak,Semen,Jawa Tengah
+PT_KertasJaya,58.9,ya,Kertas,Riau
+PT_AgroSentosa,41.7,tidak,Agribisnis,Lampung
+PT_BajaIndo,70.2,ya,Manufaktur,Banten
+PT_KimiaJaya,48.4,tidak,Kimia,Jawa Timur
+PT_TambangMakmur,80.6,ya,Tambang,Kalimantan Selatan
+PT_PetroMakmur,63.1,tidak,Petrokimia,Jakarta
+PT_LogamBerkah,54.3,ya,Logam,Jawa Barat
+PT_PlastikJaya,46.9,tidak,Plastik,Jawa Tengah
+PT_EnergiMakmur,77.8,ya,Energi,Sumatera Selatan
+PT_TextilBerkah,66.4,ya,Tekstil,Banten
+PT_SemenJaya,44.2,tidak,Semen,Jawa Timur
+PT_KertasMakmur,57.5,ya,Kertas,Sumatera Utara
+PT_AgroBerkah,40.8,tidak,Agribisnis,Jawa Barat
+PT_BajaMakmur,72.1,ya,Manufaktur,Jawa Tengah
+PT_KimiaMakmur,50.3,tidak,Kimia,Banten
+PT_TambangJaya,85.7,ya,Tambang,Kalimantan Timur
+        </pre>
+        <ul>
+            <li>Klik <span class="term">File > Save As</span>, arahkan ke <span class="term">C:\EnergiHijau2025</span>.</li>
+            <li>Nama file: <span class="term">emisi_perusahaan.csv</span>, pilih “All Files” di “Save as type”, encoding “UTF-8”.</li>
+            <li>Klik <span class="term">Save</span>.</li>
+        </ul>
+        <p><strong>Langkah untuk konflik_lahan.csv:</strong></p>
+        <ul>
+            <li>Buka <span class="term">Notepad</span> baru, tulis header:</li>
+        </ul>
+        <pre>Nama_Proyek,Luas_Lahan,Status_Konflik,Lokasi,Tahun_Mulai</pre>
+        <ul>
+            <li>Tambah 30 baris data, berikut isi lengkap:</li>
+        </ul>
+        <pre>
+Nama_Proyek,Luas_Lahan,Status_Konflik,Lokasi,Tahun_Mulai
+PLTS_Jawa1,600.0,tidak,Jawa Tengah,2022
+PLTS_Sulawesi1,400.0,ya,Sulawesi Selatan,2021
+PLTS_Jawa2,300.0,tidak,Jawa Barat,2023
+PLTS_Bali1,550.0,ya,Bali,2022
+PLTS_Sumatera1,450.0,tidak,Sumatera Utara,2021
+PLTS_Kalimantan1,700.0,ya,Kalimantan Timur,2023
+PLTS_Jawa3,350.0,tidak,Jawa Timur,2022
+PLTS_Sulawesi2,500.0,ya,Sulawesi Tenggara,2021
+PLTS_Banten1,650.0,tidak,Banten,2023
+PLTS_Sumatera2,420.0,ya,Sumatera Selatan,2022
+PLTS_Jawa4,480.0,tidak,Jawa Tengah,2021
+PLTS_Bali2,580.0,ya,Bali,2023
+PLTS_Kalimantan2,390.0,tidak,Kalimantan Selatan,2022
+PLTS_Sulawesi3,620.0,ya,Sulawesi Selatan,2021
+PLTS_Jawa5,340.0,tidak,Jawa Barat,2023
+PLTS_Sumatera3,510.0,ya,Sumatera Utara,2022
+PLTS_Banten2,460.0,tidak,Banten,2021
+PLTS_Jawa6,680.0,ya,Jawa Tengah,2023
+PLTS_Sulawesi4,430.0,tidak,Sulawesi Tenggara,2022
+PLTS_Bali3,570.0,ya,Bali,2021
+PLTS_Kalimantan3,490.0,tidak,Kalimantan Timur,2023
+PLTS_Jawa7,360.0,ya,Jawa Timur,2022
+PLTS_Sumatera4,640.0,tidak,Sumatera Selatan,2021
+PLTS_Banten3,410.0,ya,Banten,2023
+PLTS_Sulawesi5,590.0,tidak,Sulawesi Selatan,2022
+PLTS_Jawa8,470.0,ya,Jawa Barat,2021
+PLTS_Kalimantan4,520.0,tidak,Kalimantan Selatan,2023
+PLTS_Bali4,380.0,ya,Bali,2022
+PLTS_Sumatera5,660.0,tidak,Sumatera Utara,2021
+PLTS_Jawa9,440.0,ya,Jawa Tengah,2023
+        </pre>
+        <ul>
+            <li>Simpan sebagai <span class="term">konflik_lahan.csv</span> di <span class="term">C:\EnergiHijau2025</span>.</li>
+        </ul>
+        <p><strong>Langkah untuk tren_emisi.csv:</strong></p>
+        <ul>
+            <li>Buka <span class="term">Notepad</span> baru, tulis header:</li>
+        </ul>
+        <pre>Nama_Perusahaan,Emisi_2020,Emisi_2021,Emisi_2022,Emisi_2023</pre>
+        <ul>
+            <li>Tambah 30 baris data, berikut isi lengkap:</li>
+        </ul>
+        <pre>
+Nama_Perusahaan,Emisi_2020,Emisi_2021,Emisi_2022,Emisi_2023
+PT_Textilindo,65.0,64.2,63.5,62.8
+PT_Semindo,48.0,47.5,46.8,46.2
+PT_EnergiJaya,80.0,79.5,78.8,78.3
+PT_Pulpindo,58.0,57.2,56.5,55.8
+PT_AgroMakmur,45.0,44.3,43.6,42.9
+PT_BajaSentosa,70.0,69.5,69.0,68.5
+PT_KimiaFarindo,52.0,51.3,50.6,49.9
+PT_MiningCo,85.0,84.2,83.5,82.8
+PT_PetroJaya,63.0,62.5,62.0,61.5
+PT_SinarLogam,56.0,55.3,54.6,53.9
+PT_IndoPlastik,50.0,49.2,48.5,47.8
+PT_BumiEnergi,78.0,77.5,76.8,76.1
+PT_TextilMakmur,67.0,66.5,66.0,65.5
+PT_SemenBerkah,46.0,45.5,45.0,44.5
+PT_KertasJaya,61.0,60.3,59.6,58.9
+PT_AgroSentosa,44.0,43.5,43.0,42.5
+PT_BajaIndo,73.0,72.5,72.0,71.5
+PT_KimiaJaya,51.0,50.5,50.0,49.5
+PT_TambangMakmur,83.0,82.5,82.0,81.5
+PT_PetroMakmur,65.0,64.5,64.0,63.5
+PT_LogamBerkah,57.0,56.5,56.0,55.5
+PT_PlastikJaya,49.0,48.5,48.0,47.5
+PT_EnergiMakmur,80.0,79.5,79.0,78.5
+PT_TextilBerkah,69.0,68.5,68.0,67.5
+PT_SemenJaya,47.0,46.5,46.0,45.5
+PT_KertasMakmur,62.0,61.5,61.0,60.5
+PT_AgroBerkah,43.0,42.5,42.0,41.5
+PT_BajaMakmur,74.0,73.5,73.0,72.5
+PT_KimiaMakmur,53.0,52.5,52.0,51.5
+PT_TambangJaya,87.0,86.5,86.0,85.5
+        </pre>
+        <ul>
+            <li>Simpan sebagai <span class="term">tren_emisi.csv</span> di <span class="term">C:\EnergiHijau2025</span>.</li>
+        </ul>
+        <p><strong>Artinya:</strong> Membuat <span class="term">CSV</span> manual di <span class="term">Notepad</span> membantu pemula memahami struktur data (kolom dipisah koma, baris dipisah enter), cocok untuk belajar dasar <span class="term">CSV</span>.</p>
+        <h3>4. Buat File CSV dengan Excel (Alternatif Visual)</h3>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! Kalau <span class="term">Notepad</span> terasa ribet, kita coba pakai <span class="term">Excel</span>, lebih mudah karena seperti tabel biasa. Ini cocok untuk pemula yang suka input data secara visual.</p>
+        <p><strong>Langkah untuk emisi_perusahaan.csv:</strong></p>
+        <ul>
+            <li>Buka <span class="term">Microsoft Excel</span> (atau <span class="term">Google Sheets</span>, <span class="term">LibreOffice Calc</span>).</li>
+            <li>Di baris pertama, isi kolom A-E sebagai header:</li>
+            <li>A1: <span class="term">Nama_Perusahaan</span></li>
+            <li>B1: <span class="term">Emisi_2024</span></li>
+            <li>C1: <span class="term">Klaim_Hijau</span></li>
+            <li>D1: <span class="term">Sektor</span></li>
+            <li>E1: <span class="term">Lokasi</span></li>
+            <li>Isi 30 baris data mulai dari baris 2, sesuai isi di atas (lihat <span class="term">emisi_perusahaan.csv</span> di Notepad).</li>
+            <li>Contoh 5 baris pertama:</li>
+            <li>A2: <span class="term">PT_Textilindo</span>, B2: <span class="term">62.5</span>, C2: <span class="term">ya</span>, D2: <span class="term">Tekstil</span>, E2: <span class="term">Jawa Barat</span></li>
+            <li>A3: <span class="term">PT_Semindo</span>, B3: <span class="term">45.8</span>, C3: <span class="term">tidak</span>, D3: <span class="term">Semen</span>, E3: <span class="term">Jawa Tengah</span></li>
+            <li>A4: <span class="term">PT_EnergiJaya</span>, B4: <span class="term">78.2</span>, C4: <span class="term">ya</span>, D4: <span class="term">Energi</span>, E4: <span class="term">Banten</span></li>
+            <li>A5: <span class="term">PT_Pulpindo</span>, B5: <span class="term">55.0</span>, C5: <span class="term">ya</span>, D5: <span class="term">Kertas</span>, E5: <span class="term">Sumatera Utara</span></li>
+            <li>A6: <span class="term">PT_AgroMakmur</span>, B6: <span class="term">42.3</span>, C6: <span class="term">tidak</span>, D6: <span class="term">Agribisnis</span>, E6: <span class="term">Jawa Timur</span></li>
+            <li>Lanjutkan hingga 30 baris.</li>
+            <li>Klik <span class="term">File > Save As</span>, arahkan ke <span class="term">C:\EnergiHijau2025</span>.</li>
+            <li>Nama file: <span class="term">emisi_perusahaan.csv</span>, pilih “CSV (Comma delimited) (*.csv)” di “Save as type”.</li>
+            <li>Klik <span class="term">Save</span>, abaikan peringatan format jika muncul.</li>
+        </ul>
+        <p><strong>Langkah untuk konflik_lahan.csv dan tren_emisi.csv:</strong></p>
+        <ul>
+            <li>Ulangi proses di <span class="term">Excel</span> dengan header dan data sesuai isi di atas.</li>
+            <li>Simpan masing-masing sebagai <span class="term">konflik_lahan.csv</span> dan <span class="term">tren_emisi.csv</span> di <span class="term">C:\EnergiHijau2025</span>.</li>
+        </ul>
+        <p><strong>Artinya:</strong> <span class="term">Excel</span> mempermudah input data dalam format tabel, cocok untuk pemula yang terbiasa dengan spreadsheet.</p>
+        <h3>5. Verifikasi File CSV</h3>
+        <p><strong>Narasi:</strong> Halo, <span class="term">teman-teman</span>! Setelah bikin <span class="term">CSV</span>, kita cek biar yakin filenya benar dan bisa dibaca <span class="term">Python</span>. Ini penting untuk hindari error saat coding.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Buka <span class="term">C:\EnergiHijau2025</span> di File Explorer.</li>
+            <li>Klik kanan file (misalnya <span class="term">emisi_perusahaan.csv</span>), pilih <span class="term">Open with > Notepad</span> atau <span class="term">Excel</span>.</li>
+            <li>Pastikan:</li>
+            <li>Header ada di baris pertama, kolom dipisah koma (di <span class="term">Notepad</span>) atau rapi di kolom (di <span class="term">Excel</span>).</li>
+            <li>Ada 30 baris data (total 31 baris termasuk header).</li>
+            <li>Tidak ada spasi, tanda kutip berlebih, atau karakter aneh.</li>
+            <li>Jika ada error (misalnya koma salah tempat), edit file di <span class="term">Notepad</span>/<span class="term">Excel</span>, simpan ulang.</li>
+        </ul>
+        <p><strong>Artinya:</strong> Verifikasi memastikan <span class="term">CSV</span> siap digunakan oleh <span class="term">Python</span>, menghindari masalah saat analisis.</p>
+        <h2>Penjelasan Data</h2>
+        <p><strong>emisi_perusahaan.csv:</strong> Berisi 30 perusahaan dengan 5 kolom:</p>
+        <ul>
+            <li><span class="term">Nama_Perusahaan</span>: Nama perusahaan (misalnya <span class="term">PT_Textilindo</span>).</li>
+            <li><span class="term">Emisi_2024</span>: Emisi karbon 2024 (ton CO2, realistis 40-85 ton untuk industri menengah).</li>
+            <li><span class="term">Klaim_Hijau</span>: Klaim ramah lingkungan (ya/tidak, sesuai laporan <span class="term">KLHK</span>).</li>
+            <li><span class="term">Sektor</span>: Jenis industri (misalnya tekstil, semen, energi).</li>
+            <li><span class="term">Lokasi</span>: Provinsi di Indonesia (misalnya Jawa Barat, Banten).</li>
+        </ul>
+        <p>Digunakan untuk analisis <span class="term">pajak karbon</span> dan <span class="term">greenwashing</span>.</p>
+        <p><strong>konflik_lahan.csv:</strong> Berisi 30 proyek PLTS dengan 5 kolom:</p>
+        <ul>
+            <li><span class="term">Nama_Proyek</span>: Nama proyek (misalnya <span class="term">PLTS_Jawa1</span>).</li>
+            <li><span class="term">Luas_Lahan</span>: Luas lahan (hektar, 300-700 ha realistis untuk <span class="term">PLTS</span>).</li>
+            <li><span class="term">Status_Konflik</span>: Konflik dengan warga (ya/tidak, berdasarkan <span class="term">WALHI</span>).</li>
+            <li><span class="term">Lokasi</span>: Provinsi proyek.</li>
+            <li><span class="term">Tahun_Mulai</span>: Tahun proyek dimulai (2021-2023).</li>
+        </ul>
+        <p>Digunakan untuk analisis risiko <span class="term">konflik lahan</span>.</p>
+        <p><strong>tren_emisi.csv:</strong> Berisi emisi tahunan 2020-2023 untuk 30 perusahaan dengan 5 kolom:</p>
+        <ul>
+            <li><span class="term">Nama_Perusahaan</span>: Nama perusahaan (sesuai <span class="term">emisi_perusahaan.csv</span>).</li>
+            <li><span class="term">Emisi_2020</span>, <span class="term">Emisi_2021</span>, <span class="term">Emisi_2022</span>, <span class="term">Emisi_2023</span>: Emisi per tahun (ton CO2).</li>
+        </ul>
+        <p>Digunakan untuk visualisasi <span class="term">tren emisi</span>.</p>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! File <span class="term">CSV</span> ini adalah jantungan proyek kita! Dengan 30 baris dan 5 kolom, data ini realistis, mencerminkan kasus energi hijau di Indonesia. Kita akan pakai <span class="term">Pandas</span> untuk baca file ini, analisis <span class="term">emisi</span>, cek <span class="term">greenwashing</span>, dan evaluasi <span class="term">konflik lahan</span>. Data ini bikin portofolio kita kuat untuk usulan ke pemerintah. Yuk, lanjut setup environment!</p>
+    </div>
+</body>
+</html>

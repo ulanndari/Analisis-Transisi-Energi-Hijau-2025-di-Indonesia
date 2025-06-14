@@ -1,0 +1,281 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 11: Pie Chart Distribusi Konflik Lahan - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Query 11: Pie Chart Distribusi Konflik Lahan</h1>
+        <h2>Deskripsi</h2>
+        <p><strong>Tujuan:</strong> Memvisualisasikan proporsi proyek <span class="term">PLTS</span> berisiko <span class="term">konflik lahan</span> dari <span class="term">CSV</span>.</p>
+        <p><strong>Konsep:</strong> <span class="term">Matplotlib</span>, <span class="term">dictionary</span> (Chapter 8), <span class="term">Pandas</span> untuk baca <span class="term">CSV</span>.</p>
+        <p><strong>Output:</strong> <span class="term">Pie chart</span> proporsi risiko <span class="term">konflik</span>.</p>
+        <h2>Kaidah Statistik dan Kenapa Dipilih</h2>
+        <p><span class="term">Pie chart</span> dipilih untuk tunjukkan proporsi proyek <span class="term">PLTS</span> berisiko <span class="term">konflik lahan</span>. Kaidah: persentase kategori (berisiko/aman) dalam lingkaran. Cocok untuk dampak sosial energi hijau, bantu pemerintah lihat sebaran masalah lahan, visualisasi intuitif untuk portofolio.</p>
+        <h2>Kode</h2>
+        <pre>
+<span class="comment"># Impor Pandas untuk mengelola data CSV</span>
+<span class="keyword">import</span> <span class="string">pandas</span> <span class="keyword">as</span> <span class="string">pd</span>
+<span class="comment"># Impor Matplotlib untuk membuat grafik</span>
+<span class="keyword">import</span> <span class="string">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="string">plt</span>
+
+<span class="comment"># Definisikan fungsi untuk membuat pie chart konflik lahan</span>
+<span class="keyword">def</span> <span class="string">plot_konflik</span>(<span class="string">lahan_dict</span>):
+    <span class="comment"># Hitung jumlah proyek berisiko (luas > 500 ha atau konflik 'ya')</span>
+    <span class="keyword">risiko</span> = <span class="string">sum(1 for data in lahan_dict.values() if data['luas'] > 500 or data['konflik'] == 'ya')</span>
+    <span class="comment"># Hitung jumlah proyek aman</span>
+    <span class="keyword">aman</span> = <span class="string">len(lahan_dict) - risiko</span>
+    <span class="comment"># Definisikan label untuk pie chart</span>
+    <span class="keyword">labels</span> = <span class="string">['Berisiko', 'Aman']</span>
+    <span class="comment"># Definisikan ukuran untuk pie chart</span>
+    <span class="keyword">sizes</span> = <span class="string">[risiko, aman]</span>
+    <span class="comment"># Definisikan warna (merah untuk risiko, hijau untuk aman)</span>
+    <span class="keyword">colors</span> = <span class="string">['red', 'green']</span>
+    <span class="comment"># Buat pie chart dengan persentase</span>
+    <span class="keyword">plt.pie</span>(<span class="string">sizes, labels=labels, colors=colors, autopct='%1.1f%%'</span>)
+    <span class="comment"># Tambahkan judul grafik</span>
+    <span class="keyword">plt.title</span>(<span class="string">'Distribusi Risiko Konflik Lahan Proyek PLTS'</span>)
+    <span class="comment"># Tampilkan grafik</span>
+    <span class="keyword">plt.show</span>()
+
+<span class="comment"># Baca file CSV konflik_lahan.csv dari folder proyek</span>
+<span class="keyword">df</span> = <span class="string">pd.read_csv('C:/EnergiHijau2025/konflik_lahan.csv')</span>
+
+<span class="comment"># Inisiasi dictionary kosong untuk menyimpan data lahan</span>
+<span class="keyword">lahan_dict</span> = <span class="string">{}</span>
+
+<span class="comment"># Iterasi setiap baris di dataframe untuk simpan ke dictionary</span>
+<span class="keyword">for</span> <span class="string">index, row</span> <span class="keyword">in</span> <span class="string">df.iterrows()</span>:
+    <span class="comment"># Ambil nama proyek sebagai kunci</span>
+    <span class="keyword">proyek</span> = <span class="string">row['Nama_Proyek']</span>
+    <span class="comment"># Simpan luas lahan dan status konflik dalam dictionary</span>
+    <span class="keyword">lahan_dict</span>[<span class="string">proyek</span>] = {
+        <span class="string">'luas'</span>: <span class="string">row['Luas_Lahan']</span>,
+        <span class="string">'konflik'</span>: <span class="string">row['Status_Konflik']</span>
+    }
+
+<span class="comment"># Panggil fungsi untuk membuat pie chart</span>
+<span class="keyword">plot_konflik</span>(<span class="string">lahan_dict</span>)
+        </pre>
+        <h2>Narasi Arti Query</h2>
+        <p>Halo, <span class="term">eco-techno leader</span>! <span class="term">Pie chart</span> ini tunjukkan proporsi proyek <span class="term">PLTS</span> berisiko <span class="term">konflik lahan</span> dari <span class="term">CSV</span>. Merah untuk risiko, hijau untuk aman. Pakai <span class="term">Matplotlib</span> dan <span class="term">Pandas</span>, visual dampak sosial jelas. Keren untuk portofolio energi hijau! Yuk, coba!</p>
+        <h2>Kenapa Query dan Setting Seperti Ini</h2>
+        <p>Query ini gunakan <span class="term">Matplotlib</span> untuk <span class="term">pie chart</span>, kembangkan Query 9, memvisualisasikan proporsi risiko <span class="term">konflik</span> dari <span class="term">konflik_lahan.csv</span>. <span class="term">Dictionary</span> menyimpan data, <span class="term">plt.pie</span> tunjukkan distribusi risiko (luas > <span class="term">500 ha</span> atau <span class="term">konflik</span> “ya”). Warna merah (risiko) dan hijau (aman) bikin kontras. Persentase (<span class="term">autopct</span>) klarifikasi proporsi. Query relevan untuk laporan dampak sosial ke pemerintah, bantu identifikasi proyek bermasalah, perkuat portofolio dengan visualisasi intuitif, mendukung usulan mediasi lahan untuk investasi <span class="term">PLTS</span>.</p>
+        <h2>Step-by-Step Penjelasan dan Artinya</h2>
+        <ul>
+            <li><strong>Impor Pandas:</strong> <code><span class="keyword">import pandas as pd</span></code> mengimpor library. <strong>Artinya:</strong> Siapkan alat untuk baca <span class="term">CSV</span>.</li>
+            <li><strong>Impor Matplotlib:</strong> <code><span class="keyword">import matplotlib.pyplot as plt</span></code> mengimpor library grafik. <strong>Artinya:</strong> Siapkan alat untuk visualisasi.</li>
+            <li><strong>Definisikan fungsi:</strong> <code><span class="keyword">def plot_konflik(lahan_dict)</span></code> buat <span class="term">fungsi</span>. <strong>Artinya:</strong> Buat alat reusable untuk <span class="term">pie chart</span>.</li>
+            <li><strong>Hitung risiko:</strong> <code><span class="keyword">risiko = sum(...)</span></code> hitung proyek berisiko. <strong>Artinya:</strong> Tentukan jumlah proyek bermasalah.</li>
+            <li><strong>Hitung aman:</strong> <code><span class="keyword">aman = len(lahan_dict) - risiko</span></code> hitung proyek aman. <strong>Artinya:</strong> Tentukan proyek patuh standar.</li>
+            <li><strong>Set label:</strong> <code><span class="keyword">labels = ['Berisiko', 'Aman']</span></code> definisikan label. <strong>Artinya:</strong> Siapkan nama untuk segmen <span class="term">pie chart</span>.</li>
+            <li><strong>Set ukuran:</strong> <code><span class="keyword">sizes = [risiko, aman]</span></code> definisikan ukuran. <strong>Artinya:</strong> Siapkan data untuk proporsi <span class="term">pie chart</span>.</li>
+            <li><strong>Set warna:</strong> <code><span class="keyword">colors = ['red', 'green']</span></code> pilih warna. <strong>Artinya:</strong> Bikin visual kontras untuk risiko dan aman.</li>
+            <li><strong>Buat pie chart:</strong> <code><span class="keyword">plt.pie(...)</span></code> bikin lingkaran dengan persentase. <strong>Artinya:</strong> Visualisasikan proporsi risiko.</li>
+            <li><strong>Judul grafik:</strong> <code><span class="keyword">plt.title(...)</span></code> beri judul. <strong>Artinya:</strong> Jelaskan fokus grafik.</li>
+            <li><strong>Tampilkan grafik:</strong> <code><span class="keyword">plt.show()</span></code> render grafik. <strong>Artinya:</strong> Hasilkan visual untuk laporan.</li>
+            <li><strong>Baca CSV:</strong> <code><span class="keyword">df = pd.read_csv(...)</span></code> memuat data proyek. <strong>Artinya:</strong> Ambil data lahan untuk analisis.</li>
+            <li><strong>Inisiasi dictionary:</strong> <code><span class="keyword">lahan_dict = {}</span></code> buat wadah. <strong>Artinya:</strong> Siapkan tempat simpan data lahan.</li>
+            <li><strong>Iterasi dataframe:</strong> <code><span class="keyword">for index, row in df.iterrows()</span></code> loop baris. <strong>Artinya:</strong> Kumpulkan data proyek.</li>
+            <li><strong>Ambil nama:</strong> <code><span class="keyword">proyek = row['Nama_Proyek']</span></code> ambil nama proyek. <strong>Artinya:</strong> Gunakan nama sebagai kunci.</li>
+            <li><strong>Simpan data:</strong> <code><span class="keyword">lahan_dict[proyek] = {...}</span></code> simpan luas dan <span class="term">konflik</span>. <strong>Artinya:</strong> Organisir data untuk grafik.</li>
+            <li><strong>Panggil fungsi:</strong> <code><span class="keyword">plot_konflik(lahan_dict)</span></code> jalankan grafik. <strong>Artinya:</strong> Hasilkan visual untuk pemerintah.</li>
+        </ul>
+        <h2>Arti Output</h2>
+        <p><span class="term">Pie chart</span> tunjukkan misalnya <span class="term">60%</span> proyek <span class="term">PLTS</span> berisiko <span class="term">konflik lahan</span> (merah), <span class="term">40%</span> aman (hijau). Mayoritas proyek punya masalah lahan, perlu mediasi sesuai standar lingkungan (<span class="term">PP 79/2014</span>). Visual ini bantu pemerintah evaluasi dampak sosial <span class="term">PLTS</span>.</p>
+        <h2>Output Contoh</h2>
+        <p>(<span class="term">Pie chart</span> dengan misalnya <span class="term">60%</span> merah, <span class="term">40%</span> hijau)</p>
+        <h2>Narasi Analisis Grafik</h2>
+        <p>Halo, <span class="term">eco-techno leader</span>! <span class="term">Pie chart</span> bilang <span class="term">60%</span> proyek <span class="term">PLTS</span> berisiko <span class="term">konflik lahan</span>, cuma <span class="term">40%</span> aman. Artinya, banyak proyek seperti <span class="term">PLTS_Sulawesi1</span> dan <span class="term">PLTS_Bali1</span> butuh solusi soal lahan warga. <strong>Solusi ke pemerintah:</strong> Wajibkan mediasi warga sebelum proyek per <span class="term">PP 79/2014</span>. Bikin forum mediasi nasional untuk selesaikan <span class="term">konflik</span>, beri insentif untuk proyek aman seperti <span class="term">PLTS_Jawa2</span>. Ini dukung investasi energi hijau tanpa ribut, capai target <span class="term">23% energi terbarukan 2025</span>.</p>
+    </div>
+</body>
+</html>

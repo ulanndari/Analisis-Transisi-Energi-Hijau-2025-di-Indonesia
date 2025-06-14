@@ -1,0 +1,283 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 9: Analisis Konflik Lahan dengan Modul - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Query 9: Analisis Konflik Lahan dengan Modul</h1>
+        <h2>Deskripsi</h2>
+        <p><strong>Tujuan:</strong> Membuat <span class="term">modul</span> untuk menganalisis risiko <span class="term">konflik lahan</span> proyek <span class="term">PLTS</span> dari <span class="term">CSV</span>.</p>
+        <p><strong>Konsep:</strong> <span class="term">Modul</span>, <span class="term">dictionary</span>, <span class="term">if-else</span> (Chapter 10, 8, 5), <span class="term">Pandas</span> untuk baca <span class="term">CSV</span>.</p>
+        <p><strong>Output:</strong> Status risiko <span class="term">konflik</span> untuk setiap proyek.</p>
+        <h2>Kode</h2>
+        <h3>File: konflik_lahan.py</h3>
+        <pre>
+<span class="comment"># Impor Pandas untuk mengelola data CSV (di modul)</span>
+<span class="keyword">import</span> <span class="string">pandas</span> <span class="keyword">as</span> <span class="string">pd</span>
+
+<span class="comment"># Definisikan fungsi untuk cek risiko konflik lahan</span>
+<span class="keyword">def</span> <span class="string">cek_konflik</span>(<span class="string">lahan_dict</span>):
+    <span class="comment"># Iterasi dictionary untuk cek risiko konflik</span>
+    <span class="keyword">for</span> <span class="string">proyek, data</span> <span class="keyword">in</span> <span class="string">lahan_dict.items()</span>:
+        <span class="comment"># Cek apakah luas > 500 ha atau ada konflik</span>
+        <span class="keyword">if</span> <span class="string">data['luas'] > 500</span> <span class="keyword">or</span> <span class="string">data['konflik'] == 'ya'</span>:
+            <span class="comment"># Cetak status risiko jika kondisi terpenuhi</span>
+            <span class="keyword">print</span>(<span class="string">f"Proyek {proyek} berisiko konflik lahan!"</span>)
+        <span class="keyword">else</span>:
+            <span class="comment"># Cetak status aman jika kondisi tidak terpenuhi</span>
+            <span class="keyword">print</span>(<span class="string">f"Proyek {proyek} aman dari konflik."</span>)
+        </pre>
+        <h3>File utama: analisis_energi_hijau.ipynb</h3>
+        <pre>
+<span class="comment"># Impor modul konflik_lahan</span>
+<span class="keyword">from</span> <span class="string">konflik_lahan</span> <span class="keyword">import</span> <span class="string">cek_konflik</span>
+<span class="comment"># Impor Pandas untuk mengelola data CSV</span>
+<span class="keyword">import</span> <span class="string">pandas</span> <span class="keyword">as</span> <span class="string">pd</span>
+
+<span class="comment"># Baca file CSV konflik_lahan.csv dari folder proyek</span>
+<span class="keyword">df</span> = <span class="string">pd.read_csv('C:/EnergiHijau2025/konflik_lahan.csv')</span>
+
+<span class="comment"># Inisiasi dictionary kosong untuk menyimpan data lahan</span>
+<span class="keyword">lahan_dict</span> = <span class="string">{}</span>
+
+<span class="comment"># Iterasi setiap baris di dataframe untuk simpan ke dictionary</span>
+<span class="keyword">for</span> <span class="string">index, row</span> <span class="keyword">in</span> <span class="string">df.iterrows()</span>:
+    <span class="comment"># Ambil nama proyek sebagai kunci dictionary</span>
+    <span class="keyword">proyek</span> = <span class="string">row['Nama_Proyek']</span>
+    <span class="comment"># Simpan luas lahan dan status konflik dalam dictionary bersarang</span>
+    <span class="keyword">lahan_dict</span>[<span class="string">proyek</span>] = {
+        <span class="string">'luas'</span>: <span class="string">row['Luas_Lahan']</span>,
+        <span class="string">'konflik'</span>: <span class="string">row['Status_Konflik']</span>
+    }
+
+<span class="comment"># Panggil fungsi dari modul untuk cek risiko konflik</span>
+<span class="keyword">cek_konflik</span>(<span class="string">lahan_dict</span>)
+        </pre>
+        <h2>Narasi Dialog</h2>
+        <p>Halo, <span class="term">eco-techno leader</span>! Query ini bikin <span class="term">modul</span> cek risiko <span class="term">konflik lahan</span> dari <span class="term">CSV</span>. Kalau luas lahan besar atau ada konflik, proyek berisiko! Pakai <span class="term">dictionary</span>, <span class="term">modul</span>, dan <span class="term">Pandas</span>, analisis rapi. Keren untuk <span class="term">PLTS</span>! Yuk, coba di <span class="term">Jupyter</span>!</p>
+        <h2>Kenapa Query Seperti Ini</h2>
+        <p>Query ini perkenalkan <span class="term">modul</span> (Chapter 10) dengan <span class="term">fungsi</span> <span class="term">cek_konflik</span> untuk analisis risiko <span class="term">konflik lahan</span> dari <span class="term">konflik_lahan.csv</span>. <span class="term">Dictionary</span> menyimpan luas lahan dan status <span class="term">konflik</span>, <span class="term">if-else</span> cek luas > <span class="term">500 ha</span> atau <span class="term">konflik</span> “ya” (standar lingkungan, <span class="term">WALHI</span>). <span class="term">Pandas</span> memuat data, <span class="term">modul</span> bikin kode terpisah dan reusable. Standar <span class="term">500 ha</span> realistis untuk <span class="term">PLTS</span>. Query ini ajarkan modularitas, relevan untuk dampak sosial energi hijau, perkuat portofolio dengan usulan mediasi lahan ke pemerintah, mendukung investasi <span class="term">PLTS</span> tanpa <span class="term">konflik</span>.</p>
+        <h2>Query yang Digunakan dan Mengapa</h2>
+        <p><strong>Query:</strong> <span class="term">Modul</span> dengan <span class="term">dictionary</span>, <span class="term">if-else</span>, dan <span class="term">Pandas</span> untuk cek <span class="term">konflik lahan</span>.</p>
+        <p><strong>Mengapa:</strong> Bikin analisis dampak lahan modular, terstruktur, dan efisien.</p>
+        <h2>Step-by-Step Penjelasan dan Artinya (File konflik_lahan.py)</h2>
+        <ul>
+            <li><strong>Impor Pandas:</strong> <code><span class="keyword">import pandas as pd</span></code> mengimpor library. <strong>Artinya:</strong> Siapkan alat untuk baca <span class="term">CSV</span> di <span class="term">modul</span>.</li>
+            <li><strong>Definisikan fungsi:</strong> <code><span class="keyword">def cek_konflik(lahan_dict)</span></code> buat <span class="term">fungsi</span>. <strong>Artinya:</strong> Buat alat reusable untuk cek risiko <span class="term">konflik</span>.</li>
+            <li><strong>Iterasi dictionary:</strong> <code><span class="keyword">for proyek, data in lahan_dict.items()</span></code> loop entri. <strong>Artinya:</strong> Periksa data setiap proyek <span class="term">PLTS</span>.</li>
+            <li><strong>Logika if-else:</strong> <code><span class="keyword">if data['luas'] > 500 or data['konflik'] == 'ya'</span></code> cek risiko. <strong>Artinya:</strong> Identifikasi proyek berisiko berdasarkan luas atau <span class="term">konflik</span>.</li>
+            <li><strong>Output pesan:</strong> <code><span class="keyword">print(...)</span></code> tampilkan status risiko. <strong>Artinya:</strong> Informasikan hasil untuk evaluasi pemerintah.</li>
+        </ul>
+        <h2>Step-by-Step Penjelasan dan Artinya (File utama)</h2>
+        <ul>
+            <li><strong>Impor modul:</strong> <code><span class="keyword">from konflik_lahan import cek_konflik</span></code> impor <span class="term">fungsi</span>. <strong>Artinya:</strong> Gunakan <span class="term">fungsi</span> modular untuk analisis.</li>
+            <li><strong>Impor Pandas:</strong> <code><span class="keyword">import pandas as pd</span></code> mengimpor library. <strong>Artinya:</strong> Siapkan alat untuk baca <span class="term">CSV</span>.</li>
+            <li><strong>Baca CSV:</strong> <code><span class="keyword">df = pd.read_csv(...)</span></code> memuat data proyek. <strong>Artinya:</strong> Ambil data lahan untuk analisis.</li>
+            <li><strong>Inisiasi dictionary:</strong> <code><span class="keyword">lahan_dict = {}</span></code> buat wadah kosong. <strong>Artinya:</strong> Siapkan tempat simpan data lahan.</li>
+            <li><strong>Iterasi dataframe:</strong> <code><span class="keyword">for index, row in df.iterrows()</span></code> loop baris. <strong>Artinya:</strong> Kumpulkan data setiap proyek.</li>
+            <li><strong>Ambil nama:</strong> <code><span class="keyword">proyek = row['Nama_Proyek']</span></code> ambil nama proyek. <strong>Artinya:</strong> Gunakan nama sebagai kunci <span class="term">dictionary</span>.</li>
+            <li><strong>Simpan data:</strong> <code><span class="keyword">lahan_dict[proyek] = {...}</span></code> simpan luas dan <span class="term">konflik</span>. <strong>Artinya:</strong> Organisir data untuk cek risiko.</li>
+            <li><strong>Panggil fungsi:</strong> <code><span class="keyword">cek_konflik(lahan_dict)</span></code> jalankan <span class="term">fungsi</span>. <strong>Artinya:</strong> Terapkan analisis untuk hasilkan output.</li>
+        </ul>
+        <h2>Arti Output</h2>
+        <p>Output “Proyek <span class="term">PLTS_Jawa1</span> berisiko <span class="term">konflik lahan</span>!” artinya luas > <span class="term">500 ha</span> atau ada <span class="term">konflik</span>, tak penuhi standar. “Proyek <span class="term">PLTS_Jawa2</span> aman dari <span class="term">konflik</span>” artinya luas kecil dan tanpa <span class="term">konflik</span>. Hasil bantu evaluasi proyek <span class="term">PLTS</span> untuk pemerintah.</p>
+        <h2>Output Contoh (potongan)</h2>
+        <pre>
+Proyek PLTS_Jawa1 berisiko konflik lahan!
+Proyek PLTS_Sulawesi1 berisiko konflik lahan!
+Proyek PLTS_Jawa2 aman dari konflik.
+...
+        </pre>
+    </div>
+</body>
+</html>

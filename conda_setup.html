@@ -1,0 +1,296 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conda Environment Setup - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Langkah-Langkah Membuat Conda Environment dengan Anaconda</h1>
+        <p>Halo, <span class="term">teman-teman</span>! Kita akan membangun lingkungan coding menggunakan <span class="term">Anaconda</span> agar proyek energi hijau kita berjalan mulus. <span class="term">Anaconda</span> adalah pengelola <span class="term">Python</span> dan library yang memastikan tidak ada konflik antarproyek. Kita gunakan <span class="term">Python 3.12</span> untuk stabilitas. Yuk, ikuti langkah-langkah seru ini!</p>
+        <h2>1. Instalasi Anaconda</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! Kita mulai dengan menginstal <span class="term">Anaconda</span>, seperti membangun fondasi rumah coding. <span class="term">Anaconda</span> menyediakan semua alat untuk analisis energi hijau kita.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Unduh <span class="term">Anaconda</span> dari <a href="https://www.anaconda.com/download">https://www.anaconda.com/download</a> untuk Windows/Linux/MacOS.</li>
+            <li>Jalankan installer, ikuti wizard instalasi, dan centang “Add Anaconda to PATH” agar mudah diakses.</li>
+            <li>Buka terminal (Command Prompt di Windows: tekan <span class="term">Win + R</span>, ketik <span class="term">cmd</span>; Mac: Terminal; Linux: Terminal), ketik:</li>
+        </ul>
+        <pre><span class="keyword">conda</span> <span class="string">--version</span></pre>
+        <ul>
+            <li>Jika muncul versi (misalnya <span class="term">conda 24.5.0</span>), instalasi berhasil!</li>
+        </ul>
+        <p><strong>Artinya:</strong> <span class="term">Anaconda</span> menjadi pusat kendali, mempersiapkan kita untuk membuat environment proyek.</p>
+        <h2>2. Membuat Conda Environment</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">teman-teman</span>! Sekarang kita buat ruangan khusus bernama <span class="term">energi_hijau</span> untuk proyek kita. Ini seperti kamar sendiri biar alat coding tidak campur aduk.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Di terminal, ketik:</li>
+        </ul>
+        <pre><span class="keyword">conda create</span> <span class="string">-n energi_hijau python=3.12</span></pre>
+        <ul>
+            <li>Tekan <span class="term">y</span> saat diminta konfirmasi.</li>
+            <li>Aktifkan environment:</li>
+        </ul>
+        <pre><span class="keyword">conda activate</span> <span class="string">energi_hijau</span></pre>
+        <ul>
+            <li>Prompt berubah ke <span class="term">(energi_hijau)</span>, artinya kita di ruangan baru!</li>
+        </ul>
+        <p><strong>Artinya:</strong> Environment memisahkan proyek kita, menggunakan <span class="term">Python 3.12</span> yang cocok untuk analisis data.</p>
+        <h2>3. Instalasi Library</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! Kita isi ruangan <span class="term">energi_hijau</span> dengan alat-alat keren: <span class="term">Pandas</span>, <span class="term">NumPy</span>, <span class="term">Matplotlib</span>, dan <span class="term">Jupyter</span>. Ini seperti beli perlengkapan untuk analisis canggih.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Di terminal (pastikan <span class="term">(energi_hijau)</span> aktif), ketik:</li>
+        </ul>
+        <pre><span class="keyword">pip install</span> <span class="string">pandas numpy matplotlib jupyter</span></pre>
+        <ul>
+            <li>Tunggu instalasi selesai.</li>
+            <li>Cek instalasi di terminal, buka <span class="term">Python</span> (<span class="keyword">python</span>), ketik:</li>
+        </ul>
+        <pre>
+<span class="keyword">import</span> <span class="string">pandas</span>
+<span class="keyword">import</span> <span class="string">numpy</span>
+<span class="keyword">import</span> <span class="string">matplotlib</span>
+<span class="keyword">import</span> <span class="string">jupyter</span>
+<span class="keyword">print</span>(<span class="string">"Library siap dipake!"</span>)
+        </pre>
+        <ul>
+            <li>Jika tidak ada error, library siap!</li>
+        </ul>
+        <p><strong>Artinya:</strong> Library menjadi fondasi untuk mengolah data, menghitung statistik, membuat grafik, dan coding interaktif.</p>
+        <h2>4. Setup VSCode</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">teman-teman</span>! Kita pindah ke <span class="term">VSCode</span>, seperti membuat meja kerja nyaman untuk coding. <span class="term">VSCode</span> membantu kita menulis dan menjalankan kode dengan rapi untuk analisis energi hijau.</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Unduh <span class="term">VSCode</span> dari <a href="https://code.visualstudio.com">https://code.visualstudio.com</a>.</li>
+            <li>Buka <span class="term">VSCode</span>, klik tab <span class="term">Extensions</span> (Ctrl+Shift+X), instal:</li>
+            <li><span class="term">Python</span> (by Microsoft): Untuk menjalankan kode <span class="term">Python</span>.</li>
+            <li><span class="term">Jupyter</span> (by Microsoft): Untuk mendukung file <span class="term">Jupyter Notebook</span> (.ipynb).</li>
+            <li>Klik <span class="term">File > Open Folder</span>, pilih folder <span class="term">C:\EnergiHijau2025</span> (yang berisi <span class="term">CSV</span>).</li>
+            <li>Buat file <span class="term">Jupyter Notebook</span>: Klik <span class="term">File > New File</span>, pilih <span class="term">Jupyter Notebook</span>, simpan sebagai <span class="term">analisis_energi_hijau.ipynb</span>.</li>
+        </ul>
+        <p><strong>Artinya:</strong> <span class="term">VSCode</span> menjadi studio coding, dengan ekstensi <span class="term">Python</span> dan <span class="term">Jupyter</span> memungkinkan kerja interaktif.</p>
+        <p><strong>Sequence:</strong> Setelah environment siap, <span class="term">VSCode</span> menyambungkan ke folder proyek dan data <span class="term">CSV</span>.</p>
+        <h2>5. Mengatur Terminal dan Kernel di VSCode</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">eco-techno leader</span>! Kita atur terminal dan kernel di <span class="term">VSCode</span> agar kode berjalan di environment <span class="term">energi_hijau</span>. Ini seperti menyambungkan listrik ke meja kerja!</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Buka terminal baru: Klik <span class="term">Terminal > New Terminal</span>.</li>
+            <li>Pastikan <span class="term">(energi_hijau)</span> aktif. Jika belum, ketik:</li>
+        </ul>
+        <pre><span class="keyword">conda activate</span> <span class="string">energi_hijau</span></pre>
+        <ul>
+            <li>Prompt berubah ke <span class="term">(energi_hijau)</span>.</li>
+            <li>Pilih kernel: Di <span class="term">analisis_energi_hijau.ipynb</span>, klik <span class="term">Select Kernel</span> di kanan atas. Pilih <span class="term">energi_hijau</span> (Python 3.12). Jika tidak muncul, klik <span class="term">Python Environments</span>, pilih interpreter dari <span class="term">(energi_hijau)</span>.</li>
+        </ul>
+        <p><strong>Artinya:</strong> Terminal dan kernel menyambungkan <span class="term">VSCode</span> ke environment, memastikan kode menggunakan <span class="term">Python 3.12</span> dan library.</p>
+        <p><strong>Sequence:</strong> Setelah setup <span class="term">VSCode</span>, langkah ini menyambungkan ke environment untuk coding.</p>
+        <h2>6. Menjalankan Jupyter Notebook</h2>
+        <p><strong>Narasi:</strong> Halo, <span class="term">teman-teman</span>! Kita coba jalankan <span class="term">Jupyter Notebook</span> di <span class="term">VSCode</span>, seperti menyalakan mesin untuk analisis energi hijau. Ini langkah seru untuk melihat kode hidup!</p>
+        <p><strong>Langkah:</strong></p>
+        <ul>
+            <li>Di <span class="term">analisis_energi_hijau.ipynb</span>, klik <span class="term">+ Code</span> untuk membuat cell baru.</li>
+            <li>Tulis kode tes:</li>
+        </ul>
+        <pre>
+<span class="keyword">print</span>(<span class="string">"Halo, proyek Energi Hijau 2025 dimulai!"</span>)
+        </pre>
+        <ul>
+            <li>Jalankan cell dengan tombol <span class="term">Run Cell</span> (segitiga) atau <span class="term">Ctrl+Enter</span>.</li>
+            <li>Lihat output di bawah cell, misalnya <span class="term">Halo, proyek Energi Hijau 2025 dimulai!</span>. Jika muncul, setup sukses!</li>
+            <li>Tambah cell untuk query berikutnya, simpan file.</li>
+        </ul>
+        <p><strong>Artinya:</strong> <span class="term">Jupyter</span> memungkinkan coding langkah demi langkah, ideal untuk analisis data.</p>
+        <p><strong>Sequence:</strong> Setelah kernel siap, kita mulai coding di <span class="term">Jupyter</span>, fondasi untuk query.</p>
+    </div>
+</body>
+</html>

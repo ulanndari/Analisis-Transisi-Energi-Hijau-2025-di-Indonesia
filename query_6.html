@@ -1,0 +1,263 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 6: Deteksi Greenwashing dengan Dictionary - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Query 6: Deteksi Greenwashing dengan Dictionary</h1>
+        <h2>Deskripsi</h2>
+        <p><strong>Tujuan:</strong> Mendeteksi <span class="term">greenwashing</span> dari <span class="term">CSV</span> berdasarkan <span class="term">klaim hijau</span> dan <span class="term">emisi</span>.</p>
+        <p><strong>Konsep:</strong> <span class="term">Dictionary</span>, <span class="term">if-else</span> (Chapter 8, 5), <span class="term">Pandas</span> untuk baca <span class="term">CSV</span>.</p>
+        <p><strong>Output:</strong> Status <span class="term">greenwashing</span> untuk setiap perusahaan.</p>
+        <h2>Kode</h2>
+        <pre>
+<span class="comment"># Impor Pandas untuk mengelola data CSV</span>
+<span class="keyword">import</span> <span class="string">pandas</span> <span class="keyword">as</span> <span class="string">pd</span>
+
+<span class="comment"># Baca file CSV emisi_perusahaan.csv dari folder proyek</span>
+<span class="keyword">df</span> = <span class="string">pd.read_csv('C:/EnergiHijau2025/emisi_perusahaan.csv')</span>
+
+<span class="comment"># Inisiasi dictionary kosong untuk menyimpan emisi dan klaim</span>
+<span class="keyword">emisi_dict</span> = <span class="string">{}</span>
+
+<span class="comment"># Iterasi setiap baris di dataframe untuk simpan ke dictionary</span>
+<span class="keyword">for</span> <span class="string">index, row</span> <span class="keyword">in</span> <span class="string">df.iterrows()</span>:
+    <span class="comment"># Ambil nama perusahaan sebagai kunci dictionary</span>
+    <span class="keyword">perusahaan</span> = <span class="string">row['Nama_Perusahaan']</span>
+    <span class="comment"># Simpan emisi dan klaim hijau dalam dictionary bersarang</span>
+    <span class="keyword">emisi_dict</span>[<span class="string">perusahaan</span>] = {
+        <span class="string">'emisi'</span>: <span class="string">row['Emisi_2024']</span>,
+        <span class="string">'klaim'</span>: <span class="string">row['Klaim_Hijau']</span>
+    }
+
+<span class="comment"># Iterasi dictionary untuk cek greenwashing</span>
+<span class="keyword">for</span> <span class="string">perusahaan, data</span> <span class="keyword">in</span> <span class="string">emisi_dict.items()</span>:
+    <span class="comment"># Cek apakah perusahaan klaim hijau dan emisi > 50 ton</span>
+    <span class="keyword">if</span> <span class="string">data['klaim'] == 'ya'</span> <span class="keyword">and</span> <span class="string">data['emisi'] > 50</span>:
+        <span class="comment"># Cetak status greenwashing jika kondisi terpenuhi</span>
+        <span class="keyword">print</span>(<span class="string">f"{perusahaan} terdeteksi greenwashing dengan emisi {data['emisi']} ton!"</span>)
+    <span class="keyword">else</span>:
+        <span class="comment"># Cetak status tidak greenwashing jika kondisi tidak terpenuhi</span>
+        <span class="keyword">print</span>(<span class="string">f"{perusahaan} tidak terdeteksi greenwashing."</span>)
+        </pre>
+        <h2>Narasi Dialog</h2>
+        <p>Halo, <span class="term">teman-teman</span>! Query ini cek <span class="term">greenwashing</span> dari <span class="term">CSV</span>. Kalau klaim hijau tapi <span class="term">emisi</span> lebih dari <span class="term">50 ton</span>, itu <span class="term">greenwashing</span>! Pakai <span class="term">dictionary</span>, <span class="term">if-else</span>, dan <span class="term">Pandas</span>, kita analisis kejujuran perusahaan. Keren untuk energi hijau! Yuk, coba di <span class="term">Jupyter</span>!</p>
+        <h2>Kenapa Query Seperti Ini</h2>
+        <p>Query ini gabungkan <span class="term">dictionary</span> dan <span class="term">if-else</span> (Chapter 8, 5) untuk deteksi <span class="term">greenwashing</span> dari <span class="term">emisi_perusahaan.csv</span>. <span class="term">Dictionary</span> bersarang menyimpan <span class="term">emisi</span> dan <span class="term">klaim</span>, <span class="term">if-else</span> cek klaim “ya” dan <span class="term">emisi</span> > <span class="term">50 ton</span> (standar lingkungan). <span class="term">Pandas</span> memuat data, query kembangkan Query 5, tambah analisis kejujuran. Logika “klaim hijau tapi <span class="term">emisi</span> tinggi” sesuai definisi <span class="term">greenwashing</span> (<span class="term">KLHK</span>). Query ini ajarkan <span class="term">dictionary</span> kompleks dan logika bersyarat, perkuat portofolio dengan usulan verifikasi <span class="term">klaim</span> ke pemerintah, relevan untuk energi hijau.</p>
+        <h2>Query yang Digunakan dan Mengapa</h2>
+        <p><strong>Query:</strong> <span class="term">Dictionary</span> bersarang, <span class="term">if-else</span> dengan <span class="term">Pandas</span> untuk cek <span class="term">greenwashing</span>.</p>
+        <p><strong>Mengapa:</strong> Deteksi kejujuran perusahaan, gunakan struktur data kompleks.</p>
+        <h2>Step-by-Step Penjelasan dan Artinya</h2>
+        <ul>
+            <li><strong>Impor Pandas:</strong> <code><span class="keyword">import pandas as pd</span></code> mengimpor library. <strong>Artinya:</strong> Siapkan alat untuk baca <span class="term">CSV</span>.</li>
+            <li><strong>Baca CSV:</strong> <code><span class="keyword">df = pd.read_csv(...)</span></code> memuat data perusahaan. <strong>Artinya:</strong> Ambil data untuk analisis.</li>
+            <li><strong>Inisiasi dictionary:</strong> <code><span class="keyword">emisi_dict = {}</span></code> buat wadah kosong. <strong>Artinya:</strong> Siapkan tempat simpan <span class="term">emisi</span> dan <span class="term">klaim</span>.</li>
+            <li><strong>Iterasi dataframe:</strong> <code><span class="keyword">for index, row in df.iterrows()</span></code> loop baris. <strong>Artinya:</strong> Periksa setiap perusahaan.</li>
+            <li><strong>Ambil nama:</strong> <code><span class="keyword">perusahaan = row['Nama_Perusahaan']</span></code> ambil nama. <strong>Artinya:</strong> Gunakan nama sebagai kunci.</li>
+            <li><strong>Simpan data:</strong> <code><span class="keyword">emisi_dict[perusahaan] = {...}</span></code> simpan <span class="term">emisi</span> dan <span class="term">klaim</span>. <strong>Artinya:</strong> Organisir data untuk cek <span class="term">greenwashing</span>.</li>
+            <li><strong>Iterasi dictionary:</strong> <code><span class="keyword">for perusahaan, data in emisi_dict.items()</span></code> loop <span class="term">dictionary</span>. <strong>Artinya:</strong> Periksa setiap perusahaan.</li>
+            <li><strong>Logika if-else:</strong> <code><span class="keyword">if data['klaim'] == 'ya' and data['emisi'] > 50</span></code> cek <span class="term">greenwashing</span>. <strong>Artinya:</strong> Identifikasi pelaku <span class="term">greenwashing</span>.</li>
+            <li><strong>Output pesan:</strong> <code><span class="keyword">print(...)</span></code> tampilkan status. <strong>Artinya:</strong> Informasikan hasil untuk pemerintah.</li>
+        </ul>
+        <h2>Arti Output</h2>
+        <p>Output “<span class="term">PT_Textilindo</span> terdeteksi <span class="term">greenwashing</span> dengan emisi <span class="term">62.5 ton</span>!” artinya klaim hijau tapi <span class="term">emisi</span> tinggi, tak patuh. “<span class="term">PT_Semindo</span> tidak terdeteksi <span class="term">greenwashing</span>” artinya <span class="term">emisi</span> rendah atau tanpa klaim, jujur. Hasil bantu pemerintah audit kejujuran perusahaan.</p>
+        <h2>Output Contoh (potongan)</h2>
+        <pre>
+PT_Textilindo terdeteksi greenwashing dengan emisi 62.5 ton!
+PT_Semindo tidak terdeteksi greenwashing.
+PT_EnergiJaya terdeteksi greenwashing dengan emisi 78.2 ton!
+...
+        </pre>
+    </div>
+</body>
+</html>

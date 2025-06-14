@@ -1,0 +1,286 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query 12: Line Chart Tren Emisi - Transisi Energi Hijau 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E6F4EA;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+        h3 {
+            color: #2E7D32;
+            font-size: 20px;
+        }
+        p, li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        pre, code {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #F5F5F5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .term {
+            color: #EF6C00;
+            font-style: italic;
+        }
+        .keyword {
+            color: #0000FF;
+        }
+        .comment {
+            color: #008000;
+        }
+        .string {
+            color: #800080;
+        }
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2E7D32;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .nav-bar li {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+        .nav-bar a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .nav-bar a:hover {
+            transform: scale(1.1);
+            background-color: #1B5E20;
+            border-radius: 5px;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #FFFFFF;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .nav-bar li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333333;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+        }
+        .dropdown a:hover {
+            background-color: #E6F4EA;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Sections</a>
+                <div class="dropdown">
+                    <a href="introduction.html">Introduction</a>
+                    <a href="background.html">Latar Belakang Kasus</a>
+                    <a href="problem_issue.html">Problem Issue</a>
+                    <a href="coding_objective.html">Tujuan Query Coding</a>
+                    <a href="libraries.html">Libraries</a>
+                    <a href="csv_preparation.html">Persiapan Data CSV</a>
+                    <a href="conda_setup.html">Conda Environment Setup</a>
+                    <a href="env_terms.html">Istilah Lingkungan</a>
+                    <a href="query_1.html">Query 1</a>
+                    <a href="query_2.html">Query 2</a>
+                    <a href="query_3.html">Query 3</a>
+                    <a href="query_4.html">Query 4</a>
+                    <a href="query_5.html">Query 5</a>
+                    <a href="query_6.html">Query 6</a>
+                    <a href="query_7.html">Query 7</a>
+                    <a href="query_8.html">Query 8</a>
+                    <a href="query_9.html">Query 9</a>
+                    <a href="query_10.html">Query 10</a>
+                    <a href="query_11.html">Query 11</a>
+                    <a href="query_12.html">Query 12</a>
+                    <a href="conclusion.html">Kesimpulan</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Query 12: Line Chart Tren Emisi</h1>
+        <h2>Deskripsi</h2>
+        <p><strong>Tujuan:</strong> Memvisualisasikan tren <span class="term">emisi perusahaan</span> dari <span class="term">2020-2023</span> dari <span class="term">CSV</span>.</p>
+        <p><strong>Konsep:</strong> <span class="term">Matplotlib</span>, <span class="term">dictionary</span> (Chapter 8), <span class="term">Pandas</span> untuk baca <span class="term">CSV</span>.</p>
+        <p><strong>Output:</strong> <span class="term">Line chart</span> tren <span class="term">emisi</span> dengan batas pajak.</p>
+        <h2>Kaidah Statistik dan Kenapa Dipilih</h2>
+        <p><span class="term">Line chart</span> dipilih untuk tunjukkan tren <span class="term">emisi perusahaan</span> sepanjang waktu. Kaidah: waktu di sumbu x, <span class="term">emisi</span> di sumbu y, hubungkan titik untuk lihat perubahan. Cocok untuk <span class="term">regulasi karbon</span>, bantu prediksi kepatuhan, visualisasi dinamis untuk portofolio energi hijau.</p>
+        <h2>Kode</h2>
+        <pre>
+<span class="comment"># Impor Pandas untuk mengelola data CSV</span>
+<span class="keyword">import</span> <span class="string">pandas</span> <span class="keyword">as</span> <span class="string">pd</span>
+<span class="comment"># Impor Matplotlib untuk membuat grafik</span>
+<span class="keyword">import</span> <span class="string">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="string">plt</span>
+
+<span class="comment"># Definisikan fungsi untuk membuat line chart tren emisi</span>
+<span class="keyword">def</span> <span class="string">plot_tren_emisi</span>(<span class="string">emisi_dict</span>):
+    <span class="comment"># Definisikan tahun untuk sumbu x</span>
+    <span class="keyword">tahun</span> = <span class="string">[2020, 2021, 2022, 2023]</span>
+    <span class="comment"># Iterasi dictionary untuk plot setiap perusahaan</span>
+    <span class="keyword">for</span> <span class="string">perusahaan, emisi_list</span> <span class="keyword">in</span> <span class="string">emisi_dict.items()</span>:
+        <span class="comment"># Buat garis untuk setiap perusahaan dengan marker titik</span>
+        <span class="keyword">plt.plot</span>(<span class="string">tahun, emisi_list, marker='o', label=perusahaan</span>)
+    <span class="comment"># Tambahkan label sumbu x</span>
+    <span class="keyword">plt.xlabel</span>(<span class="string">'Tahun'</span>)
+    <span class="comment"># Tambahkan label sumbu y</span>
+    <span class="keyword">plt.ylabel</span>(<span class="string">'Emisi (ton CO2)'</span>)
+    <span class="comment"># Tambahkan judul grafik</span>
+    <span class="keyword">plt.title</span>(<span class="string">'Tren Emisi Karbon Perusahaan 2020-2023'</span>)
+    <span class="comment"># Tambahkan garis batas pajak (50 ton, merah, putus-putus)</span>
+    <span class="keyword">plt.axhline</span>(<span class="string">y=50, color='red', linestyle='--', label='Batas Pajak (50 ton)'</span>)
+    <span class="comment"># Tambahkan legenda untuk perusahaan dan garis batas</span>
+    <span class="keyword">plt.legend</span>(<span class="string">bbox_to_anchor=(1.05, 1), loc='upper left'</span>)
+    <span class="comment"># Atur layout agar grafik rapi</span>
+    <span class="keyword">plt.tight_layout</span>()
+    <span class="comment"># Tampilkan grafik</span>
+    <span class="keyword">plt.show</span>()
+
+<span class="comment"># Baca file CSV tren_emisi.csv dari folder proyek</span>
+<span class="keyword">df</span> = <span class="string">pd.read_csv('C:/EnergiHijau2025/tren_emisi.csv')</span>
+
+<span class="comment"># Inisiasi dictionary kosong untuk menyimpan tren emisi</span>
+<span class="keyword">emisi_dict</span> = <span class="string">{}</span>
+
+<span class="comment"># Iterasi setiap baris di dataframe untuk simpan ke dictionary</span>
+<span class="keyword">for</span> <span class="string">index, row</span> <span class="keyword">in</span> <span class="string">df.iterrows()</span>:
+    <span class="comment"># Ambil nama perusahaan sebagai kunci</span>
+    <span class="keyword">perusahaan</span> = <span class="string">row['Nama_Perusahaan']</span>
+    <span class="comment"># Simpan emisi tahunan dalam list</span>
+    <span class="keyword">emisi_list</span> = <span class="string">[row['Emisi_2020'], row['Emisi_2021'], row['Emisi_2022'], row['Emisi_2023']]</span>
+    <span class="comment"># Simpan ke dictionary</span>
+    <span class="keyword">emisi_dict</span>[<span class="string">perusahaan</span>] = <span class="string">emisi_list</span>
+
+<span class="comment"># Panggil fungsi untuk membuat line chart</span>
+<span class="keyword">plot_tren_emisi</span>(<span class="string">emisi_dict</span>)
+        </pre>
+        <h2>Narasi Arti Query</h2>
+        <p>Halo, <span class="term">eco-techno leader</span>! <span class="term">Line chart</span> ini tunjukkan tren <span class="term">emisi perusahaan</span> dari <span class="term">CSV</span> <span class="term">2020-2023</span>. Garis merah batas <span class="term">50 ton</span> bantu lihat kepatuhan. Pakai <span class="term">Matplotlib</span> dan <span class="term">Pandas</span>, prediksi <span class="term">regulasi karbon</span> jelas. Keren untuk portofolio energi hijau! Yuk, coba!</p>
+        <h2>Kenapa Query dan Setting Seperti Ini</h2>
+        <p>Query ini gunakan <span class="term">Matplotlib</span> untuk <span class="term">line chart</span>, kembangkan Query 10, memvisualisasikan tren <span class="term">emisi</span> dari <span class="term">tren_emisi.csv</span>. <span class="term">Dictionary</span> menyimpan <span class="term">emisi</span> tahunan, <span class="term">plt.plot</span> tunjukkan perubahan. Garis batas <span class="term">50 ton</span> (<span class="term">axhline</span>) klarifikasi kepatuhan <span class="term">regulasi karbon</span>. Marker “o” bikin titik jelas, legenda bedakan perusahaan. Periode <span class="term">2020-2023</span> realistis untuk tren. Query relevan untuk laporan prediksi ke pemerintah, bantu rencana pengurangan <span class="term">emisi</span>, perkuat portofolio dengan visualisasi dinamis, mendukung usulan verifikasi <span class="term">emisi</span> untuk <span class="term">Net Zero Emission 2060</span>.</p>
+        <h2>Step-by-Step Penjelasan dan Artinya</h2>
+        <ul>
+            <li><strong>Impor Pandas:</strong> <code><span class="keyword">import pandas as pd</span></code> mengimpor library. <strong>Artinya:</strong> Siapkan alat untuk baca <span class="term">CSV</span>.</li>
+            <li><strong>Impor Matplotlib:</strong> <code><span class="keyword">import matplotlib.pyplot as plt</span></code> mengimpor library grafik. <strong>Artinya:</strong> Siapkan alat untuk visualisasi.</li>
+            <li><strong>Definisikan fungsi:</strong> <code><span class="keyword">def plot_tren_emisi(emisi_dict)</span></code> buat <span class="term">fungsi</span>. <strong>Artinya:</strong> Buat alat reusable untuk <span class="term">line chart</span>.</li>
+            <li><strong>Set tahun:</strong> <code><span class="keyword">tahun = [2020, 2021, 2022, 2023]</span></code> definisikan sumbu x. <strong>Artinya:</strong> Tentukan periode analisis tren.</li>
+            <li><strong>Iterasi dictionary:</strong> <code><span class="keyword">for perusahaan, emisi_list in emisi_dict.items()</span></code> loop entri. <strong>Artinya:</strong> Plot tren setiap perusahaan.</li>
+            <li><strong>Buat garis:</strong> <code><span class="keyword">plt.plot(...)</span></code> bikin garis dengan titik. <strong>Artinya:</strong> Visualisasikan tren <span class="term">emisi</span>.</li>
+            <li><strong>Label sumbu:</strong> <code><span class="keyword">plt.xlabel(...)</span></code>, <code><span class="keyword">plt.ylabel(...)</span></code> beri nama sumbu. <strong>Artinya:</strong> Bikin grafik mudah dipahami.</li>
+            <li><strong>Judul grafik:</strong> <code><span class="keyword">plt.title(...)</span></code> beri judul. <strong>Artinya:</strong> Jelaskan fokus grafik.</li>
+            <li><strong>Garis batas:</strong> <code><span class="keyword">plt.axhline(...)</span></code> tambah garis <span class="term">50 ton</span>. <strong>Artinya:</strong> Tandai standar <span class="term">pajak karbon</span>.</li>
+            <li><strong>Tambah legenda:</strong> <code><span class="keyword">plt.legend(...)</span></code> tampilkan label. <strong>Artinya:</strong> Bikin grafik informatif, hindari tumpang tindih.</li>
+            <li><strong>Atur layout:</strong> <code><span class="keyword">plt.tight_layout()</span></code> bikin grafik rapi. <strong>Artinya:</strong> Optimalkan tampilan grafik.</li>
+            <li><strong>Tampilkan grafik:</strong> <code><span class="keyword">plt.show()</span></code> render grafik. <strong>Artinya:</strong> Hasilkan visual untuk laporan.</li>
+            <li><strong>Baca CSV:</strong> <code><span class="keyword">df = pd.read_csv(...)</span></code> memuat data <span class="term">emisi</span> tahunan. <strong>Artinya:</strong> Ambil data untuk analisis.</li>
+            <li><strong>Inisiasi dictionary:</strong> <code><span class="keyword">emisi_dict = {}</span></code> buat wadah. <strong>Artinya:</strong> Siapkan tempat simpan tren <span class="term">emisi</span>.</li>
+            <li><strong>Iterasi dataframe:</strong> <code><span class="keyword">for index, row in df.iterrows()</span></code> loop baris. <strong>Artinya:</strong> Kumpulkan data perusahaan.</li>
+            <li><strong>Ambil nama:</strong> <code><span class="keyword">perusahaan = row['Nama_Perusahaan']</span></code> ambil nama. <strong>Artinya:</strong> Gunakan nama sebagai kunci.</li>
+            <li><strong>Simpan emisi:</strong> <code><span class="keyword">emisi_list = [...]</span></code> simpan <span class="term">emisi</span> tahunan. <strong>Artinya:</strong> Organisir data untuk grafik.</li>
+            <li><strong>Simpan ke dictionary:</strong> <code><span class="keyword">emisi_dict[perusahaan] = emisi_list</span></code> simpan data. <strong>Artinya:</strong> Siapkan data untuk visualisasi.</li>
+            <li><strong>Panggil fungsi:</strong> <code><span class="keyword">plot_tren_emisi(emisi_dict)</span></code> jalankan grafik. <strong>Artinya:</strong> Hasilkan visual untuk pemerintah.</li>
+        </ul>
+        <h2>Arti Output</h2>
+        <p><span class="term">Line chart</span> tunjukkan tren <span class="term">emisi</span> (misalnya <span class="term">PT_Textilindo</span> turun dari <span class="term">65.0</span> ke <span class="term">62.8 ton</span>). Garis merah <span class="term">50 ton</span> tandai batas pajak. Perusahaan di bawah garis (misalnya <span class="term">PT_Semindo</span>) patuh, di atas (<span class="term">PT_EnergiJaya</span>) bermasalah. Bantu prediksi kepatuhan <span class="term">regulasi karbon</span>.</p>
+        <h2>Output Contoh</h2>
+        <p>(<span class="term">Line chart</span> dengan garis per perusahaan, garis merah di <span class="term">50 ton</span>)</p>
+        <h2>Narasi Analisis Grafik</h2>
+        <p>Halo, <span class="term">eco-techno leader</span>! <span class="term">Line chart</span> ceritain tren <span class="term">emisi</span> <span class="term">2020-2023</span>. <span class="term">PT_Textilindo</span> dan <span class="term">PT_EnergiJaya</span> tetap di atas <span class="term">50 ton</span>, perlu intervensi. <span class="term">PT_Semindo</span> stabil di bawah batas, patuh regulasi. <strong>Solusi ke pemerintah:</strong> Wajibkan teknologi rendah karbon untuk pelanggar per <span class="term">UU HPP 2021</span>, promosikan praktik <span class="term">PT_Semindo</span>, dan bikin laporan <span class="term">emisi</span> tahunan. Database <span class="term">emisi</span> nasional bantu verifikasi rutin, dukung target <span class="term">Net Zero Emission 2060</span> dan <span class="term">23% energi terbarukan 2025</span>.</p>
+    </div>
+</body>
+</html>
