@@ -20,3 +20,10 @@ Apa yang bakal didapat? 🎁:
 Ditunggu partisipasinya! 🎉 Aksi kecil hari ini = dampak besar untuk bumi 🌍💚. Let’s lead the green revolution! ♻️🚀
 
 #EcoTechnoLeader #EnergiHijau2025 #IndonesiaHijau 🌿✨
+
+---
+
+![ROADMAP](https://github.com/arry-hutomo/Analisis-Transisi-Energi-Hijau-2025-di-Indonesia/blob/main/ROADMAP.png)
+
+---
+
