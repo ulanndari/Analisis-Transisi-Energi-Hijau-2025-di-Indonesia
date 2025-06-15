@@ -56,7 +56,7 @@ Doa & Semangat:
 #EcoDataPioneers #EnergiHijau2025 #PythonForEarth 💡🌎
 
 
-Arry Hutomo,
-FOUNDER NAWALA INTEGRA NUSANTARA
+**ARRY HUTOMO**  
+✨ _**Founder • Nawala Integra Nusantara**_ ✨  
 
 ---
